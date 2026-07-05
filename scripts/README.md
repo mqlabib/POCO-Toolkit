@@ -1,16 +1,11 @@
-# Scanner
+# Scripts
 
-The Universal Device Scanner is the foundation of POCO Toolkit.
+This directory stores generated ADB scripts.
 
-Responsibilities:
+Examples:
 
-- Detect connected device
-- Verify ADB connection
-- Read Android properties
-- Detect HyperOS version
-- Detect bootloader state
-- Detect root status
-- Read installed packages
-- Generate Phone_Scan.txt
+- Safe Debloat
+- Restore Packages
+- Verify Installation
 
-The scanner never modifies the connected device.
+Scripts are generated from device analysis whenever possible.
