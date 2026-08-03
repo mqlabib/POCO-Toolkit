@@ -1,0 +1,16 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="PocoToolkit.App.Views.MainWindow"
+        Width="1200"
+        Height="800"
+        Title="PocoToolkit">
+
+    <Grid>
+        <TextBlock
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="28"
+            Text="PocoToolkit v0.1" />
+    </Grid>
+
+</Window>

@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PocoToolkit.Engine\PocoToolkit.Engine.csproj" />
     <ProjectReference Include="..\PocoToolkit.Contracts\PocoToolkit.Contracts.csproj" />
+    <ProjectReference Include="..\PocoToolkit.Domain\PocoToolkit.Domain.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

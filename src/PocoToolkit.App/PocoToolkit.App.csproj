@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PocoToolkit.Engine\PocoToolkit.Engine.csproj" />
     <ProjectReference Include="..\PocoToolkit.Application\PocoToolkit.Application.csproj" />
   </ItemGroup>
 </Project>
