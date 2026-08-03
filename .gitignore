@@ -1,0 +1,29 @@
+# Build
+bin/
+obj/
+
+# Rider
+.idea/
+
+# VS
+.vs/
+
+# User files
+*.user
+*.suo
+
+# Logs
+*.log
+
+# Publish
+publish/
+
+# Packages
+packages/
+
+# Temp
+*.tmp
+
+# OS
+Thumbs.db
+Desktop.ini

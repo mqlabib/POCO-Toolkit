@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/PocoToolkit.App/PocoToolkit.App.csproj" />
+    <Project Path="src/PocoToolkit.Application/PocoToolkit.Application.csproj" />
+    <Project Path="src/PocoToolkit.Contracts/PocoToolkit.Contracts.csproj" />
+    <Project Path="src/PocoToolkit.Domain/PocoToolkit.Domain.csproj" />
+    <Project Path="src/PocoToolkit.Engine/PocoToolkit.Engine.csproj" />
+  </Folder>
+</Solution>
