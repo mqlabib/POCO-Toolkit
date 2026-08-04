@@ -1,16 +1,44 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        x:Class="PocoToolkit.App.Views.MainWindow"
-        Width="1200"
-        Height="800"
-        Title="PocoToolkit">
+<Window
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:PocoToolkit.App.ViewModels"
+    x:Class="PocoToolkit.App.Views.MainWindow"
+    x:DataType="vm:MainViewModel"
+    mc:Ignorable="d"
+    Width="900"
+    Height="600"
+    Title="POCO Toolkit">
 
-    <Grid>
+    <StackPanel
+        Margin="25"
+        Spacing="12">
+
         <TextBlock
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
             FontSize="28"
-            Text="PocoToolkit v0.1" />
-    </Grid>
+            FontWeight="Bold"
+            Text="POCO Toolkit"/>
+
+        <Separator/>
+
+        <TextBlock
+            FontSize="22"
+            FontWeight="Bold"
+            Text="ADB Status"/>
+
+        <TextBlock
+            FontSize="18"
+            Text="{Binding AdbStatus}"/>
+
+        <TextBlock
+            FontSize="15"
+            Text="{Binding AdbVersion}"/>
+
+        <TextBlock
+            FontSize="15"
+            Text="{Binding AdbPath}"/>
+
+    </StackPanel>
 
 </Window>
