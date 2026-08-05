@@ -7,4 +7,6 @@ public interface IAdbRuntime
     Task<string?> GetVersionAsync();
 
     string? GetAdbPath();
+
+    Task<string> ExecuteAsync(string arguments);
 }

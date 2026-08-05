@@ -37,9 +37,9 @@ public sealed class AdbRuntime : IAdbRuntime
         }
     }
 
-    public async Task<bool> IsInstalledAsync()
+    public Task<bool> IsInstalledAsync()
     {
-        return GetAdbPath() is not null;
+        return Task.FromResult(GetAdbPath() is not null);
     }
 
     public async Task<string?> GetVersionAsync()
@@ -49,24 +49,7 @@ public sealed class AdbRuntime : IAdbRuntime
 
         try
         {
-            var process = new Process
-            {
-                StartInfo = new ProcessStartInfo
-                {
-                    FileName = "adb",
-                    Arguments = "version",
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                }
-            };
-
-            process.Start();
-
-            string output = await process.StandardOutput.ReadToEndAsync();
-
-            await process.WaitForExitAsync();
+            string output = await ExecuteAsync("version");
 
             foreach (var line in output.Split(Environment.NewLine))
             {
@@ -80,5 +63,29 @@ public sealed class AdbRuntime : IAdbRuntime
         {
             return null;
         }
+    }
+
+    public async Task<string> ExecuteAsync(string arguments)
+    {
+        var process = new Process
+        {
+            StartInfo = new ProcessStartInfo
+            {
+                FileName = "adb",
+                Arguments = arguments,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            }
+        };
+
+        process.Start();
+
+        string output = await process.StandardOutput.ReadToEndAsync();
+
+        await process.WaitForExitAsync();
+
+        return output;
     }
 }

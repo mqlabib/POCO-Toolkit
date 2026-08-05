@@ -7,4 +7,6 @@ public interface IAdbService
     Task<string?> GetVersionAsync();
 
     string? GetPath();
+
+    Task<bool> IsDeviceConnectedAsync();
 }
