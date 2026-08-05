@@ -19,6 +19,9 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     private string adbPath = "";
 
+    [ObservableProperty]
+    private string deviceStatus = "Checking...";
+
     public MainViewModel(ToolkitEngine engine)
     {
         _engine = engine;
@@ -33,12 +36,17 @@ public partial class MainViewModel : ViewModelBase
             AdbStatus = "✔ Installed";
             AdbVersion = await _engine.GetAdbVersionAsync() ?? "";
             AdbPath = _engine.GetAdbPath() ?? "";
+
+            DeviceStatus = await _engine.IsDeviceConnectedAsync()
+                ? "🟢 Connected"
+                : "🔴 Not Connected";
         }
         else
         {
             AdbStatus = "❌ Not Installed";
             AdbVersion = "";
             AdbPath = "";
+            DeviceStatus = "Unavailable";
         }
     }
 }

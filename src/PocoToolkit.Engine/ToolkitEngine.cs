@@ -19,4 +19,7 @@ public sealed class ToolkitEngine
 
     public string? GetAdbPath()
         => _adb.GetPath();
+
+    public Task<bool> IsDeviceConnectedAsync()
+        => _adb.IsDeviceConnectedAsync();
 }

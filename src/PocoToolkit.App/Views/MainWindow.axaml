@@ -25,7 +25,7 @@
         <TextBlock
             FontSize="22"
             FontWeight="Bold"
-            Text="ADB Status"/>
+            Text="ADB"/>
 
         <TextBlock
             FontSize="18"
@@ -38,6 +38,17 @@
         <TextBlock
             FontSize="15"
             Text="{Binding AdbPath}"/>
+
+        <Separator/>
+
+        <TextBlock
+            FontSize="22"
+            FontWeight="Bold"
+            Text="DEVICE"/>
+
+        <TextBlock
+            FontSize="18"
+            Text="{Binding DeviceStatus}"/>
 
     </StackPanel>
 
