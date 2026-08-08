@@ -49,7 +49,24 @@ public sealed class AdbRuntime : IAdbRuntime
 
         try
         {
-            string output = await ExecuteAsync("version");
+            var process = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "adb",
+                    Arguments = "version",
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                }
+            };
+
+            process.Start();
+
+            string output = await process.StandardOutput.ReadToEndAsync();
+
+            await process.WaitForExitAsync();
 
             foreach (var line in output.Split(Environment.NewLine))
             {
@@ -67,25 +84,41 @@ public sealed class AdbRuntime : IAdbRuntime
 
     public async Task<string> ExecuteAsync(string arguments)
     {
-        var process = new Process
+        var adbPath = GetAdbPath();
+
+        if (adbPath is null)
+            return string.Empty;
+
+        try
         {
-            StartInfo = new ProcessStartInfo
+            var process = new Process
             {
-                FileName = "adb",
-                Arguments = arguments,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            }
-        };
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = adbPath,
+                    Arguments = arguments,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                }
+            };
 
-        process.Start();
+            process.Start();
 
-        string output = await process.StandardOutput.ReadToEndAsync();
+            string output = await process.StandardOutput.ReadToEndAsync();
+            string error = await process.StandardError.ReadToEndAsync();
 
-        await process.WaitForExitAsync();
+            await process.WaitForExitAsync();
 
-        return output;
+            if (!string.IsNullOrWhiteSpace(output))
+                return output.Trim();
+
+            return error.Trim();
+        }
+        catch
+        {
+            return string.Empty;
+        }
     }
 }

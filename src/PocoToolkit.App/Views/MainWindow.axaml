@@ -25,7 +25,7 @@
         <TextBlock
             FontSize="22"
             FontWeight="Bold"
-            Text="ADB"/>
+            Text="ADB Status"/>
 
         <TextBlock
             FontSize="18"
@@ -44,7 +44,7 @@
         <TextBlock
             FontSize="22"
             FontWeight="Bold"
-            Text="DEVICE"/>
+            Text="Android Device"/>
 
         <TextBlock
             FontSize="18"

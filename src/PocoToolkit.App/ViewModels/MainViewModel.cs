@@ -38,15 +38,15 @@ public partial class MainViewModel : ViewModelBase
             AdbPath = _engine.GetAdbPath() ?? "";
 
             DeviceStatus = await _engine.IsDeviceConnectedAsync()
-                ? "🟢 Connected"
-                : "🔴 Not Connected";
+                ? "✔ Connected"
+                : "✖ Disconnected";
         }
         else
         {
             AdbStatus = "❌ Not Installed";
             AdbVersion = "";
             AdbPath = "";
-            DeviceStatus = "Unavailable";
+            DeviceStatus = "✖ Disconnected";
         }
     }
 }

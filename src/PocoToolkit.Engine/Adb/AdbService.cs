@@ -1,5 +1,3 @@
-using System.Linq;
-
 using PocoToolkit.Contracts.Abstractions;
 
 namespace PocoToolkit.Engine.Adb;
@@ -22,16 +20,24 @@ public sealed class AdbService : IAdbService
     public string? GetPath()
         => _runtime.GetAdbPath();
 
-    public async Task<bool> IsDeviceConnectedAsync()
+    public Task<bool> IsDeviceConnectedAsync()
+        => IsDeviceConnectedInternalAsync();
+
+    private async Task<bool> IsDeviceConnectedInternalAsync()
     {
         var output = await _runtime.ExecuteAsync("devices");
 
         if (string.IsNullOrWhiteSpace(output))
             return false;
 
-        return output
-            .Split('\n', StringSplitOptions.RemoveEmptyEntries)
-            .Skip(1)
-            .Any(line => line.TrimEnd().EndsWith("device"));
+        foreach (var line in output.Split(Environment.NewLine))
+        {
+            var trimmed = line.Trim();
+
+            if (trimmed.EndsWith("\tdevice", StringComparison.Ordinal))
+                return true;
+        }
+
+        return false;
     }
 }
