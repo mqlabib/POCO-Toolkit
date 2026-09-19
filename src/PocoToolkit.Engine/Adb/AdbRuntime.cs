@@ -121,4 +121,49 @@ public sealed class AdbRuntime : IAdbRuntime
             return string.Empty;
         }
     }
+
+    public async Task<string?> GetDeviceSerialAsync()
+    {
+        var output = await ExecuteAsync("devices");
+
+        if (string.IsNullOrWhiteSpace(output))
+            return null;
+
+        foreach (var line in output.Split(Environment.NewLine))
+        {
+            var parts = line
+                .Split('\t', StringSplitOptions.RemoveEmptyEntries);
+
+            if (parts.Length >= 2 &&
+                parts[1].Trim() == "device")
+            {
+                return parts[0].Trim();
+            }
+        }
+
+        return null;
+    }
+
+    public async Task<string?> GetDeviceModelAsync()
+    {
+        var serial = await GetDeviceSerialAsync();
+
+        if (string.IsNullOrWhiteSpace(serial))
+            return null;
+
+        // Prefer the consumer-facing market name.
+        var marketName = await ExecuteAsync(
+            $"-s {serial} shell getprop ro.product.marketname");
+
+        if (!string.IsNullOrWhiteSpace(marketName))
+            return marketName.Trim();
+
+        // Fallback to Android's model property.
+        var model = await ExecuteAsync(
+            $"-s {serial} shell getprop ro.product.model");
+
+        return string.IsNullOrWhiteSpace(model)
+            ? null
+            : model.Trim();
+    }
 }

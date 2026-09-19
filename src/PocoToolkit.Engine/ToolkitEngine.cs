@@ -1,25 +1,62 @@
 using PocoToolkit.Contracts.Abstractions;
+using PocoToolkit.Contracts.Enums;
+using PocoToolkit.Contracts.Models;
+using PocoToolkit.Engine.Adb;
+using PocoToolkit.Engine.Fastboot;
 
 namespace PocoToolkit.Engine;
 
 public sealed class ToolkitEngine
 {
-    private readonly IAdbService _adb;
+    private readonly IAdbRuntime _adbRuntime;
+    private readonly IDeviceDiscovery _deviceDiscovery;
+    private readonly IFastbootRuntime _fastbootRuntime;
 
-    public ToolkitEngine(IAdbService adb)
+    public ToolkitEngine(
+        IAdbRuntime adbRuntime,
+        IDeviceDiscovery deviceDiscovery,
+        IFastbootRuntime fastbootRuntime)
     {
-        _adb = adb;
+        _adbRuntime = adbRuntime;
+        _deviceDiscovery = deviceDiscovery;
+        _fastbootRuntime = fastbootRuntime;
     }
 
     public Task<bool> IsAdbInstalledAsync()
-        => _adb.IsInstalledAsync();
+    {
+        return _adbRuntime.IsInstalledAsync();
+    }
 
-    public Task<string?> GetAdbVersionAsync()
-        => _adb.GetVersionAsync();
+    public async Task<string> GetAdbVersionAsync()
+    {
+        var version = await _adbRuntime.GetVersionAsync();
 
-    public string? GetAdbPath()
-        => _adb.GetPath();
+        return string.IsNullOrWhiteSpace(version)
+            ? "Unknown"
+            : version.Trim();
+    }
 
-    public Task<bool> IsDeviceConnectedAsync()
-        => _adb.IsDeviceConnectedAsync();
+    public string GetAdbPath()
+    {
+        var path = _adbRuntime.GetAdbPath();
+
+        return string.IsNullOrWhiteSpace(path)
+            ? "Unknown"
+            : path.Trim();
+    }
+
+    public Task<DeviceConnectionState> GetDeviceConnectionStateAsync()
+    {
+        return _deviceDiscovery.GetConnectionStateAsync();
+    }
+
+    public Task<DeviceInfo?> GetDeviceInfoAsync()
+    {
+        return _deviceDiscovery.GetDeviceInfoAsync();
+    }
+
+    public Task<string> ExecuteFastbootAsync(string arguments)
+    {
+        return _fastbootRuntime.ExecuteAsync(arguments);
+    }
 }

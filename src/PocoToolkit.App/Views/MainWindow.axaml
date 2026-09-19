@@ -1,15 +1,9 @@
-<Window
+<ScrollViewer
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:PocoToolkit.App.ViewModels"
     x:Class="PocoToolkit.App.Views.MainWindow"
-    x:DataType="vm:MainViewModel"
-    mc:Ignorable="d"
-    Width="900"
-    Height="600"
-    Title="POCO Toolkit">
+    x:DataType="vm:MainViewModel">
 
     <StackPanel
         Margin="25"
@@ -50,6 +44,63 @@
             FontSize="18"
             Text="{Binding DeviceStatus}"/>
 
+        <TextBlock
+            FontSize="16"
+            Text="{Binding DeviceModelDisplay}"/>
+
+        <TextBlock
+            FontSize="16"
+            Text="{Binding DeviceSerialDisplay}"/>
+
+        <TextBlock
+            FontSize="16"
+            Text="{Binding DeviceCodenameDisplay}"/>
+
+        <TextBlock
+            FontSize="16"
+            Text="{Binding AndroidVersionDisplay}"/>
+
+        <TextBlock
+            FontSize="16"
+            Text="{Binding RootDisplay}"/>
+
+        <StackPanel
+            Orientation="Horizontal"
+            Spacing="6">
+
+            <TextBlock
+                FontSize="16"
+                Text="{Binding BootloaderDisplay}"/>
+
+            <TextBlock
+                FontSize="14"
+                Text="ⓘ"
+                VerticalAlignment="Center"
+                ToolTip.Tip="Some Custom ROMs spoof bootloader status to pass integrity checks."/>
+        </StackPanel>
+
+        <Separator/>
+
+        <TextBlock
+            FontSize="22"
+            FontWeight="Bold"
+            Text="ROM"/>
+
+        <TextBlock
+            FontSize="16"
+            Text="{Binding RomDisplay}"/>
+
+        <TextBlock
+            FontSize="16"
+            Text="{Binding RomBuildDisplay}"
+            TextWrapping="Wrap"/>
+
+        <Button
+            Width="120"
+            HorizontalAlignment="Left"
+            Content="Refresh"
+            Command="{Binding RefreshCommand}"/>
+
     </StackPanel>
 
-</Window>
+</ScrollViewer>

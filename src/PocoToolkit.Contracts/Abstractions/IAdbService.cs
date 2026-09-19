@@ -1,12 +1,17 @@
+using PocoToolkit.Contracts.Models;
+
 namespace PocoToolkit.Contracts.Abstractions;
 
 public interface IAdbService
 {
-    Task<bool> IsInstalledAsync();
+Task<bool> IsInstalledAsync();
 
-    Task<string?> GetVersionAsync();
+Task<string?> GetVersionAsync();
 
-    string? GetPath();
+string? GetPath();
 
-    Task<bool> IsDeviceConnectedAsync();
+Task<bool> IsDeviceConnectedAsync();
+
+Task<DeviceInfo?> GetDeviceInfoAsync();
+
 }
